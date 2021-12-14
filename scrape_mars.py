@@ -6,6 +6,16 @@ from bs4 import BeautifulSoup
 import pandas as pd
 
 
+def scrape_all():
+    listing = {
+        "mars_news": mars_news(),
+        "mars_img": mars_img(),
+        "mars_facts": mars_facts(),
+        "mars_hems": mars_hems()
+    }
+    return listing
+
+
 ##################
 # NASA Mars News #
 ##################
@@ -15,12 +25,12 @@ def mars_news():
         browser.visit(url)
         html = browser.html
         soup = BeautifulSoup(html, 'html.parser')
-        titles = soup.find_all('div', class_="content_title")
-        teaser_para = soup.find_all('div', class_="article_teaser_body")
+        titles = soup.find_all('div', class_="content_title")[0].text
+        teaser_para = soup.find_all('div', class_="article_teaser_body")[0].text
         browser.quit()
     return {
-        "title": titles[0],
-        "para": teaser_para[0]
+        "title": titles,
+        "para": teaser_para
     }
 
 
