@@ -11,8 +11,7 @@
     />
   </head>
   <body>
-    <div class="container">
-      <!-- Add Jumbotron to Header -->
+    <div>
       <div class="jumbotron text-center">
         <h1>Mission to Mars</h1>
         <!-- Add a button to activate scraping script -->
@@ -24,8 +23,8 @@
           <div class="media">
             <div class="media-body">
               <h2>Latest Mars News</h2>
-              <h4 class="media-heading">{{ mars_data_dict.news1head }}</h4>
-              <p>{{ mars_data_dict.new1con }}</p>
+              <h4 class="media-heading">{{ listings.mars_news.title }}</h4>
+              <p>{{ listings.mars_news.para }}</p>
             </div>
           </div>
         </div>
@@ -34,9 +33,8 @@
       <div class="row" id="mars.data.dict.final_image">
         <div class="col-md-8">
           <h2>Featured Mars Image</h2>
-
           <img
-            src="{{ mars_data_dict.table2 | safe }}"
+            src="{{ listings.mars_img.feat_img_url | safe }}"
             class="img-responsive"
             alt="Responsive image"
           />
@@ -45,7 +43,7 @@
           <!-- Mars Facts -->
           <div class="row" id="mars-facts">
             <h4>Mars Facts</h4>
-            {{ mars_data_dict.table2 | safe }}
+            {{ listings.mars_facts.table_html | safe }}
           </div>
         </div>
       </div>
@@ -54,7 +52,7 @@
         <div class="page-header">
           <h2 class="text-center">Mars Hemispheres</h2>
         </div>
-        {% for hemisphere in mars_data_dict.hemispheres %}
+        {% for hemisphere in listings.mars_hems %}
         <div class="col-md-6">
           <div class="thumbnail">
             <img src="{{hemisphere.img_url | default('static/images/error.png', true)}}" alt="...">

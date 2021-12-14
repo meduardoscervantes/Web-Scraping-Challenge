@@ -1,6 +1,6 @@
 from flask import Flask, render_template, redirect
 from flask_pymongo import PyMongo
-import scrape_mars
+from scrape_mars import scrape_all
 
 app = Flask(__name__)
 
@@ -15,14 +15,15 @@ mongo = PyMongo(app)
 @app.route("/")
 def index():
     listings = mongo.db.listings.find_one()
-    return render_template("index.html")
+    return render_template("index.html", listings=listings)
 
 
 @app.route("/scrape")
 def scraper():
     listings = mongo.db.listings
-    listings_data = scrape_mars.scrape_all()
-    listings.update_one({}, listings_data, upsert=True)
+    listings.drop()
+    listings_data = scrape_all()
+    listings.insert_one(listings_data)
     return redirect("/", code=302)
 
 
