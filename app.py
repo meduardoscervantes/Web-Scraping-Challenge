@@ -14,6 +14,10 @@ mongo = PyMongo(app)
 
 @app.route("/")
 def index():
+    listings = mongo.db.listings
+    listings.drop()
+    listings_data = scrape_all()
+    listings.insert_one(listings_data)
     listings = mongo.db.listings.find_one()
     return render_template("index.html", listings=listings)
 
